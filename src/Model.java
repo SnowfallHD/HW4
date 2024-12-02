@@ -108,6 +108,7 @@ public class Model {
         }
         scroll();
         removePlatforms();
+        ensurePlatformsAbove();
     }
 
     public static Platform createRegularPlatform(double x, double y) {
@@ -167,6 +168,9 @@ public class Model {
         boolean isVerticallyAligned = playerBottomY >= platformTopY - 5 && playerBottomY <= platformTopY + platform.getHeight() + 5;
         
         boolean isFalling = player.getVelocityY() > 0;
+
+        return isHorizontallyAligned && isVerticallyAligned && isFalling;
+    }
     
 
     private Platform getTopMostPlatform() {
@@ -195,10 +199,6 @@ public class Model {
     
             addPlatform(y);
         }
-    }
-    
-    
-        return isHorizontallyAligned && isVerticallyAligned && isFalling;
     }
 
     public boolean isGameOver() {

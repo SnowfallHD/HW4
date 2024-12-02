@@ -33,8 +33,9 @@ public class Model {
 
         generateInitialPlatforms(platformY);
 
-        System.out.println("Initial Player Y: " + player.getY());
-        System.out.println("Initial Platform Y: " + platformY);
+        // Debug Statements
+        // System.out.println("Initial Player Y: " + player.getY());
+        // System.out.println("Initial Platform Y: " + platformY);
 
     }
 
@@ -45,8 +46,8 @@ public class Model {
         addFirstPlatform(lastPlatformX, y);
         y -= 80;
     
-        // Generate subsequent platforms
-        while (y > -50) { // Adjust to ensure platforms are generated above
+        // Generate new platforms at the top
+        while (y > -50) { 
             addPlatform(y);
             y -= 80;
         }
@@ -54,15 +55,13 @@ public class Model {
     
     
     private void addFirstPlatform(double x, double y) {
-        Platform platform = createRegularPlatform(x, y); // Ensure it's a regular platform
+        Platform platform = createRegularPlatform(x, y);
         platforms.add(platform);
         view.addPlatform(platform);
     }
 
     private void addPlatform(double y) {
-        double xOffset = 80; // Max horizontal distance between platforms
-        double yOffsetMin = 20; // Min vertical distance
-        double yOffsetMax = 70; // Max vertical distance
+        double xOffset = 60; // Max horizontal distance between platforms
     
         // Calculate bounds for X based on last platform's X position
         double minX = Math.max(0, lastPlatformX - xOffset);
@@ -80,8 +79,8 @@ public class Model {
         player.applyGravity();
         
         // Debug statements
-        System.out.println("Player Y Position: " + player.getY());
-        System.out.println("Player VelocityY: " + player.getVelocityY());
+        // System.out.println("Player Y Position: " + player.getY());
+        // System.out.println("Player VelocityY: " + player.getVelocityY());
 
         // Update platforms
         for (Platform platform : platforms) {
@@ -102,7 +101,6 @@ public class Model {
                 break;
             }
         }
-
         scroll();
         removePlatforms();
     }
@@ -158,11 +156,9 @@ public class Model {
         double playerBottomY = player.getY() + player.getHeight();
         double platformTopY = platform.getY();
     
-        boolean isHorizontallyAligned = 
-            player.getX() + player.getWidth() > platform.getX() && player.getX() < platform.getX() + platform.getWidth();
+        boolean isHorizontallyAligned = player.getX() + player.getWidth() > platform.getX() && player.getX() < platform.getX() + platform.getWidth();
         
-        boolean isVerticallyAligned =
-            playerBottomY >= platformTopY - 5 && playerBottomY <= platformTopY + platform.getHeight() + 5;
+        boolean isVerticallyAligned = playerBottomY >= platformTopY - 5 && playerBottomY <= platformTopY + platform.getHeight() + 5;
         
         boolean isFalling = player.getVelocityY() > 0;
     
@@ -173,7 +169,6 @@ public class Model {
         boolean gameOver = player.getY() > sceneHeight;
         return gameOver;
     }
-    
 
     public Player getPlayer() {
         return player;

@@ -44,14 +44,18 @@ public class Model {
     
         // First platform directly under the player
         addFirstPlatform(lastPlatformX, y);
-        y -= 80;
     
-        // Generate new platforms at the top
-        while (y > -50) { 
+        while (y > -200) { // Continue until platforms extend beyond the top
+            double yOffsetMin = 100;
+            double yOffsetMax = 200;
+            double yOffset = yOffsetMin + Math.random() * (yOffsetMax - yOffsetMin);
+            y -= yOffset;
+    
             addPlatform(y);
-            y -= 80;
         }
     }
+    
+    
     
     
     private void addFirstPlatform(double x, double y) {
@@ -61,9 +65,8 @@ public class Model {
     }
 
     private void addPlatform(double y) {
-        double xOffset = 60; // Max horizontal distance between platforms
-    
-        // Calculate bounds for X based on last platform's X position
+        double xOffset = 100; // Adjust as needed
+        // Calculate bounds for X based on lastPlatformX
         double minX = Math.max(0, lastPlatformX - xOffset);
         double maxX = Math.min(sceneWidth - 80, lastPlatformX + xOffset);
         double x = minX + Math.random() * (maxX - minX);
@@ -74,6 +77,8 @@ public class Model {
         platforms.add(platform);
         view.addPlatform(platform);
     }
+    
+    
 
     public void updateGameState() {
         player.applyGravity();
@@ -145,12 +150,13 @@ public class Model {
                 iterator.remove();
                 view.removePlatform(platform);
                 score.increaseScore(1);
-
-                // Add new platform at the top
-                addPlatform(0);
+    
+                // **No need to add a new platform here**
             }
         }
     }
+    
+    
 
     private boolean playerIntersectsPlatform(Platform platform) {
         double playerBottomY = player.getY() + player.getHeight();
@@ -161,6 +167,36 @@ public class Model {
         boolean isVerticallyAligned = playerBottomY >= platformTopY - 5 && playerBottomY <= platformTopY + platform.getHeight() + 5;
         
         boolean isFalling = player.getVelocityY() > 0;
+    
+
+    private Platform getTopMostPlatform() {
+        Platform topPlatform = null;
+        double minY = Double.MAX_VALUE;
+        for (Platform platform : platforms) {
+            if (platform.getY() < minY) {
+                minY = platform.getY();
+                topPlatform = platform;
+            }
+        }
+        return topPlatform;
+    }
+    
+
+    private void ensurePlatformsAbove() {
+        Platform topPlatform = getTopMostPlatform();
+        double y = (topPlatform != null) ? topPlatform.getY() : sceneHeight;
+    
+        // Continue adding platforms until they extend beyond the top of the screen
+        while (y > -200) { // Adjust the threshold as needed
+            double yOffsetMin = 100;
+            double yOffsetMax = 200;
+            double yOffset = yOffsetMin + Math.random() * (yOffsetMax - yOffsetMin);
+            y -= yOffset;
+    
+            addPlatform(y);
+        }
+    }
+    
     
         return isHorizontallyAligned && isVerticallyAligned && isFalling;
     }

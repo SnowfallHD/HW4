@@ -3,7 +3,6 @@ public class PlatformFactory {
         return new RegularPlatform(x, y, 80, 10);
     }
 
-    // Existing method
     public static Platform createRandomPlatform(double x, double y) {
         double rand = Math.random();
         if (rand < 0.5) {

@@ -11,11 +11,8 @@ public abstract class Platform {
 
     public abstract void onPlayerContact(Player player);
 
-    public void update() {
-        // Default implementation does nothing
-    }
+    public void update(){} // Update method to be used for the different platforms
 
-    // Getters and setters
     public double getX() {
         return x;
     }

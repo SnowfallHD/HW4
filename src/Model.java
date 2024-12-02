@@ -10,7 +10,7 @@ public class Model {
     private View view;
 
     protected double sceneWidth, sceneHeight;
-    public static final double SCENE_WIDTH = 500;
+    public static double SCENE_WIDTH = 500;
 
     private double lastPlatformX;
 
@@ -23,7 +23,7 @@ public class Model {
         double platformY = sceneHeight - 100; // First platform's Y position
 
         // Set player's Y position to be above the platform
-        double initialPlayerY = platformY - view.getPlayerHeight() - 1;
+        double initialPlayerY = platformY - view.getPlayerHeight();
 
         this.player = new Player(initialPlayerX, initialPlayerY, view.getPlayerWidth(), view.getPlayerHeight());
 
@@ -54,7 +54,7 @@ public class Model {
     
     
     private void addFirstPlatform(double x, double y) {
-        Platform platform = PlatformFactory.createRegularPlatform(x, y); // Ensure it's a regular platform
+        Platform platform = createRegularPlatform(x, y); // Ensure it's a regular platform
         platforms.add(platform);
         view.addPlatform(platform);
     }
@@ -71,7 +71,7 @@ public class Model {
     
         lastPlatformX = x; // Update last platform's X position
     
-        Platform platform = PlatformFactory.createRandomPlatform(x, y);
+        Platform platform = createRandomPlatform(x, y);
         platforms.add(platform);
         view.addPlatform(platform);
     }
@@ -103,18 +103,35 @@ public class Model {
             }
         }
 
-        scrollIfNeeded();
-        removeOffScreenPlatforms();
+        scroll();
+        removePlatforms();
     }
 
-    private void scrollIfNeeded() {
+    public static Platform createRegularPlatform(double x, double y) {
+        return new RegularPlatform(x, y, 80, 10);
+    }
+
+    public static Platform createRandomPlatform(double x, double y) {
+        double rand = Math.random();
+        if (rand < 0.5) {
+            return new RegularPlatform(x, y, 80, 10);
+        } else if (rand < 0.7) {
+            return new DisappearingPlatform(x, y, 80, 10);
+        } else if (rand < 0.85) {
+            return new ExtraBouncyPlatform(x, y, 80, 10);
+        } else {
+            return new MovingPlatform(x, y, 80, 10);
+        }
+    }
+
+    private void scroll() {
         if (player.getY() < sceneHeight / 2) {
-            double deltaY = sceneHeight / 2 - player.getY();
+            double updateY = sceneHeight / 2 - player.getY();
             player.setY(sceneHeight / 2);
 
             // Move all platforms down
             for (Platform platform : platforms) {
-                platform.setY(platform.getY() + deltaY);
+                platform.setY(platform.getY() + updateY);
             }
 
             // Update the positions in the view
@@ -122,7 +139,7 @@ public class Model {
         }
     }
 
-    private void removeOffScreenPlatforms() {
+    private void removePlatforms() {
         Iterator<Platform> iterator = platforms.iterator();
         while (iterator.hasNext()) {
             Platform platform = iterator.next();
@@ -141,13 +158,16 @@ public class Model {
         double playerBottomY = player.getY() + player.getHeight();
         double platformTopY = platform.getY();
     
-        return player.getX() + player.getWidth() > platform.getX() &&
-               player.getX() < platform.getX() + platform.getWidth() &&
-               playerBottomY >= platformTopY - 5 && // Added tolerance
-               playerBottomY <= platformTopY + platform.getHeight() + 5 &&
-               player.getVelocityY() > 0;
+        boolean isHorizontallyAligned = 
+            player.getX() + player.getWidth() > platform.getX() && player.getX() < platform.getX() + platform.getWidth();
+        
+        boolean isVerticallyAligned =
+            playerBottomY >= platformTopY - 5 && playerBottomY <= platformTopY + platform.getHeight() + 5;
+        
+        boolean isFalling = player.getVelocityY() > 0;
+    
+        return isHorizontallyAligned && isVerticallyAligned && isFalling;
     }
-       
 
     public boolean isGameOver() {
         boolean gameOver = player.getY() > sceneHeight;

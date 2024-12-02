@@ -8,20 +8,14 @@ public class Controller {
     private View view;
     private Timeline timeline;
     private boolean isPaused = false;
-
-    // Add these variables to track key states
     private boolean leftPressed = false;
     private boolean rightPressed = false;
 
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
-        setupGameControls();
-    }
-
-    private void setupGameControls() {
         setupKeyControls();
-        setupGameLoop();
+        setupTimeline();
     }
 
     private void setupKeyControls() {
@@ -65,11 +59,10 @@ public class Controller {
         }
     
         player.setX(newX);
-        // No need to update the view here; it's handled in updateGame()
     }
     
 
-    private void setupGameLoop() {
+    private void setupTimeline() {
         timeline = new Timeline(new KeyFrame(Duration.millis(16), e -> updateGame()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
@@ -78,12 +71,12 @@ public class Controller {
     private void updateGame() {
         model.updateGameState();
     
-        // Handle continuous movement based on key states
+        // Continuous movement
         if (leftPressed) {
-            movePlayer(-5); // Adjust speed as needed for smoothness
+            movePlayer(-5); // Adjust for smoothness
         }
         if (rightPressed) {
-            movePlayer(5);
+            movePlayer(5); // Adjust for smoothness
         }
     
         if (model.isGameOver()) {

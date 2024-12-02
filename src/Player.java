@@ -5,8 +5,7 @@ public class Player {
     private static final double DURATION = 0.016; // 16 ms per frame
     private static final double GRAVITY = 800; // Adjust as needed
     private static final double REBOUND_VELOCITY = -600;
-    private static final double EXTRA_REBOUND_VELOCITY = -900;    
-
+    private static final double EXTRA_REBOUND_VELOCITY = -900;
 
     public Player(double x, double y, double width, double height) {
         this.x = x;
@@ -16,7 +15,6 @@ public class Player {
         this.velocityY = 0; // Start with zero vertical velocity
     }
     
-
     public void applyGravity() {
         velocityY += GRAVITY * DURATION;
         y += velocityY * DURATION;

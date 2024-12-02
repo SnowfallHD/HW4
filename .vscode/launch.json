@@ -15,9 +15,8 @@
             "name": "App",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "HW4_b64233d8",
-            "vmArgs": "--module-path C:\\Users\\Coop\\OneDrive\\Documents\\SFA\\Fall2024\\OOP\\javafx-sdk-22.0.2\\lib --add-modules javafx.controls,javafx.fxml --enable-preview"
-
+            "projectName": "HW4_dc510c25",
+            "vmArgs": "--module-path C:\\Users\\dsphi\\Documents\\CSCI-3331\\javafx-sdk-22.0.2\\lib --add-modules javafx.controls,javafx.fxml --enable-preview"
         }
     ]
 }

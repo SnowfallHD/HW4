@@ -33,8 +33,6 @@ public class Model {
 
         generateInitialPlatforms(platformY);
 
-        System.out.println("Initial Player Y: " + player.getY());
-        System.out.println("Initial Platform Y: " + platformY);
 
     }
 
@@ -43,14 +41,18 @@ public class Model {
     
         // First platform directly under the player
         addFirstPlatform(lastPlatformX, y);
-        y -= 80;
     
-        // Generate subsequent platforms
-        while (y > -50) { // Adjust to ensure platforms are generated above
+        while (y > -200) { // Continue until platforms extend beyond the top
+            double yOffsetMin = 100;
+            double yOffsetMax = 200;
+            double yOffset = yOffsetMin + Math.random() * (yOffsetMax - yOffsetMin);
+            y -= yOffset;
+    
             addPlatform(y);
-            y -= 80;
         }
     }
+    
+    
     
     
     private void addFirstPlatform(double x, double y) {
@@ -60,11 +62,8 @@ public class Model {
     }
 
     private void addPlatform(double y) {
-        double xOffset = 80; // Max horizontal distance between platforms
-        double yOffsetMin = 20; // Min vertical distance
-        double yOffsetMax = 70; // Max vertical distance
-    
-        // Calculate bounds for X based on last platform's X position
+        double xOffset = 100; // Adjust as needed
+        // Calculate bounds for X based on lastPlatformX
         double minX = Math.max(0, lastPlatformX - xOffset);
         double maxX = Math.min(sceneWidth - 80, lastPlatformX + xOffset);
         double x = minX + Math.random() * (maxX - minX);
@@ -75,13 +74,12 @@ public class Model {
         platforms.add(platform);
         view.addPlatform(platform);
     }
+    
+    
 
     public void updateGameState() {
         player.applyGravity();
         
-        // Debug statements
-        System.out.println("Player Y Position: " + player.getY());
-        System.out.println("Player VelocityY: " + player.getVelocityY());
 
         // Update platforms
         for (Platform platform : platforms) {
@@ -105,6 +103,7 @@ public class Model {
 
         scrollIfNeeded();
         removeOffScreenPlatforms();
+        ensurePlatformsAbove();
     }
 
     private void scrollIfNeeded() {
@@ -130,12 +129,13 @@ public class Model {
                 iterator.remove();
                 view.removePlatform(platform);
                 score.increaseScore(1);
-
-                // Add new platform at the top
-                addPlatform(0);
+    
+                // **No need to add a new platform here**
             }
         }
     }
+    
+    
 
     private boolean playerIntersectsPlatform(Platform platform) {
         double playerBottomY = player.getY() + player.getHeight();
@@ -147,6 +147,36 @@ public class Model {
                playerBottomY <= platformTopY + platform.getHeight() + 5 &&
                player.getVelocityY() > 0;
     }
+
+    private Platform getTopMostPlatform() {
+        Platform topPlatform = null;
+        double minY = Double.MAX_VALUE;
+        for (Platform platform : platforms) {
+            if (platform.getY() < minY) {
+                minY = platform.getY();
+                topPlatform = platform;
+            }
+        }
+        return topPlatform;
+    }
+    
+
+    private void ensurePlatformsAbove() {
+        Platform topPlatform = getTopMostPlatform();
+        double y = (topPlatform != null) ? topPlatform.getY() : sceneHeight;
+    
+        // Continue adding platforms until they extend beyond the top of the screen
+        while (y > -200) { // Adjust the threshold as needed
+            double yOffsetMin = 100;
+            double yOffsetMax = 200;
+            double yOffset = yOffsetMin + Math.random() * (yOffsetMax - yOffsetMin);
+            y -= yOffset;
+    
+            addPlatform(y);
+        }
+    }
+    
+    
        
 
     public boolean isGameOver() {

@@ -44,9 +44,18 @@ public class View extends BorderPane {
         setTop(scoreLabel);
 
         Button quitButton = new Button("Quit");
-        quitButton.setOnAction(e -> System.exit(0));
-        BorderPane.setAlignment(quitButton, Pos.CENTER);
+        quitButton.setOnAction(e -> {
+        System.out.println("Quit button clicked"); // Debugging message
+        System.exit(0); // Exit the application
+        });
         setBottom(quitButton);
+        BorderPane.setAlignment(quitButton, Pos.CENTER);
+
+
+
+        this.setFocusTraversable(true); // Ensure the view is focusable
+        this.requestFocus(); // Request focus so buttons and other inputs work
+
 
         setCenter(centerPane);
 
@@ -113,11 +122,14 @@ public class View extends BorderPane {
         gameOverLabel.setTextFill(Color.RED);
         gameOverLabel.setLayoutX(sceneWidth / 2 - 100);
         gameOverLabel.setLayoutY(sceneHeight / 2 - 50);
+    
         centerPane.getChildren().add(gameOverLabel);
-
-        // Disable key inputs
-        scene.setOnKeyPressed(null);
+    
+        // Ensure the quit button is still interactable
+        this.requestFocus(); // Ensure pane has focus
+        scene.setOnKeyPressed(null); // Disable key inputs for doodle movement
     }
+    
 
     public double getPlayerWidth() {
         return playerWidth;

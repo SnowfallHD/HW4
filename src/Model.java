@@ -186,7 +186,7 @@ public class Model {
     }
     
 
-    private void ensurePlatformsAbove() {
+    private void ensurePlatformsAbove() {       // method to help with smooth scroll illusion 
         Platform topPlatform = getTopMostPlatform();
         double y = (topPlatform != null) ? topPlatform.getY() : sceneHeight;
     

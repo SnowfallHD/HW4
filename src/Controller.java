@@ -45,6 +45,9 @@ public class Controller {
             timeline.play();
         }
         isPaused = !isPaused;
+
+        // Ensure quit button remains responsive
+        view.requestFocus();
     }
 
     private void movePlayer(int direction) {

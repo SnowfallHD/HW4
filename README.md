@@ -8,11 +8,12 @@ Doodle Jump is a game where you control a doodle as it bounces upwards to higher
 
 ## Additional Functionalities
 Pause button: Pressing the space bar pauses the game, and you can reclick to unpause the game. 
-We created smooth movement by tracking key presses.
+
+Smooth left/right movement with arrow keys: We tracked the key presses with boolean variables (leftPressed and rightPressed), and then called our movePlayer method with direction changes everytime those buttons were pressed. The result was a smooth look. 
 
 ## Design Choices:
 
-We used the MVC structure and implemeneted different platform types using separate classes w/ inheritence.
+We used the MVC structure and implemented different platform types using separate classes w/ inheritence.
 
 
 ## Issues During Development 

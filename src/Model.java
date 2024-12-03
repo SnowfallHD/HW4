@@ -179,9 +179,14 @@ public class Model {
     }
     
 
-    private void ensurePlatformsAbove() {       // method to help with smooth scroll illusion 
+    private void ensurePlatformsAbove() { // method to help with smooth scroll illusion 
         Platform topPlatform = getTopMostPlatform();
-        double y = (topPlatform != null) ? topPlatform.getY() : sceneHeight;
+        double y;
+        if (topPlatform != null) {
+            y = topPlatform.getY();
+        } else {
+            y = sceneHeight;
+        }        
     
         // Continue adding platforms until they extend beyond the top of the screen
         while (y > -200) { // Adjust the threshold as needed

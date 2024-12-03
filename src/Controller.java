@@ -61,7 +61,6 @@ public class Controller {
         player.setX(newX);
     }
     
-
     private void setupTimeline() {
         timeline = new Timeline(new KeyFrame(Duration.millis(16), e -> updateGame()));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -91,7 +90,6 @@ public class Controller {
         view.updateScore(model.scoreProperty().get());
     }
     
-
     public void start() {
         timeline.play();
     }

@@ -33,9 +33,6 @@ public class Model {
 
         generateInitialPlatforms(platformY);
 
-        // Debug Statements
-        // System.out.println("Initial Player Y: " + player.getY());
-        // System.out.println("Initial Platform Y: " + platformY);
 
     }
 

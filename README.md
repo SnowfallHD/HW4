@@ -11,6 +11,8 @@ Pause button: Pressing the space bar pauses the game, and you can reclick to unp
 
 Smooth left/right movement with arrow keys: We tracked the key presses with boolean variables (leftPressed and rightPressed), and then called our movePlayer method with direction changes everytime those buttons were pressed. The result was a smooth look. 
 
+Constant flow of platforms: We noticed in the video demo, the platforms spawning above the doodle were choppy, and they only seemed to spawn above when the platforms below would delete. We encorporated a method, ensurePlatformsAbove(), using another method, getTopMostPlatform(), to ensure there was a constantly flow of platforms above. This made the game look a lot more smooth, and reinforced the illusion that the screen was moving up. 
+
 ## Design Choices:
 
 We used the MVC structure and implemented different platform types using separate classes w/ inheritence.

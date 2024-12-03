@@ -175,7 +175,6 @@ public class Model {
         return topPlatform;
     }
     
-
     private void ensurePlatformsAbove() { // method to help with smooth scroll illusion 
         Platform topPlatform = getTopMostPlatform();
         double y;

@@ -32,8 +32,6 @@ public class Model {
         this.score = new Score();
 
         generateInitialPlatforms(platformY);
-
-
     }
 
     private void generateInitialPlatforms(double startY) {

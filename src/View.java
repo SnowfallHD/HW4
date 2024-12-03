@@ -55,7 +55,6 @@ public class View extends BorderPane {
         stage.setResizable(false);
     }
     
-
     public void show() {
         stage.show();
         this.setFocusTraversable(true); // Ensure the view is focusable
@@ -123,7 +122,6 @@ public class View extends BorderPane {
         centerPane.setMouseTransparent(true); // Avoid blocking events
     }
     
-
     private void setupQuitButton() {
         quitButton = new Button("Quit");
         quitButton.setFont(new Font("Arial", 16));
@@ -135,7 +133,6 @@ public class View extends BorderPane {
         setBottom(quitButton); // Ensure it is placed in the bottom region
         BorderPane.setAlignment(quitButton, Pos.CENTER);
     }
-    
 
     public double getPlayerWidth() {
         return playerWidth;

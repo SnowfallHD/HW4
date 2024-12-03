@@ -19,6 +19,7 @@ public class View extends BorderPane {
     double sceneWidth, sceneHeight;
     Pane centerPane = new Pane();
     Label scoreLabel;
+    public Button quitButton;
     double playerWidth = 50, playerHeight = 50;
     private Scene scene; // Keep this to manage focus and events
 
@@ -29,40 +30,31 @@ public class View extends BorderPane {
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
         setupDisplay();
+        setupQuitButton();
     }
 
     public void setupDisplay() {
         double playerX = sceneWidth / 2 - playerWidth / 2;
         double playerY = sceneHeight - playerHeight - 50;
+    
         player = new Rectangle(playerX, playerY, playerWidth, playerHeight);
         player.setFill(Color.ORANGE);
         centerPane.getChildren().add(player);
-
+    
         scoreLabel = new Label("Score: 0");
         scoreLabel.setFont(new Font("Arial", 24));
         BorderPane.setAlignment(scoreLabel, Pos.TOP_CENTER);
         setTop(scoreLabel);
-
-        Button quitButton = new Button("Quit");
-        quitButton.setOnAction(e -> {
-        System.out.println("Quit button clicked"); // Debugging message
-        System.exit(0); // Exit the application
-        });
-        setBottom(quitButton);
-        BorderPane.setAlignment(quitButton, Pos.CENTER);
-
-
-
-        this.setFocusTraversable(true); // Ensure the view is focusable
-        this.requestFocus(); // Request focus so buttons and other inputs work
-
-
+    
+        setupQuitButton(); // Ensure the quit button is set up here
+    
         setCenter(centerPane);
-
+    
         scene = new Scene(this, sceneWidth, sceneHeight);
         stage.setScene(scene);
         stage.setResizable(false);
     }
+    
 
     public void show() {
         stage.show();
@@ -123,11 +115,25 @@ public class View extends BorderPane {
         gameOverLabel.setLayoutX(sceneWidth / 2 - 100);
         gameOverLabel.setLayoutY(sceneHeight / 2 - 50);
     
+        // Add game over label but do not block button
         centerPane.getChildren().add(gameOverLabel);
     
-        // Ensure the quit button is still interactable
-        this.requestFocus(); // Ensure pane has focus
-        scene.setOnKeyPressed(null); // Disable key inputs for doodle movement
+        // Disable key events for the game
+        scene.setOnKeyPressed(null);
+        centerPane.setMouseTransparent(true); // Avoid blocking events
+    }
+    
+
+    private void setupQuitButton() {
+        quitButton = new Button("Quit");
+        quitButton.setFont(new Font("Arial", 16));
+        quitButton.setFocusTraversable(false); // Prevent interference from key events
+        quitButton.setOnAction(e -> {
+            System.out.println("Quit button clicked"); // Debugging
+            System.exit(0); // Quit the application
+        });
+        setBottom(quitButton); // Ensure it is placed in the bottom region
+        BorderPane.setAlignment(quitButton, Pos.CENTER);
     }
     
 

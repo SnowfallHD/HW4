@@ -25,3 +25,7 @@ Improved logic for detecting the player touching a platform. The player was goin
 Was throwing a NullPointerException because the player object was null when trying to access it when initiating the Model. Fixed by reorganizing the initialization order in Model.
 Key presses were not being captured because there was no focus.
 Overriding the getScene() method caused issue, we renamed the method in the View class to getGameScene() to avoid overriding.
+
+## Highest Score
+Cooper: 101
+Danny: 123

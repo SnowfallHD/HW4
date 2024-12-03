@@ -83,10 +83,6 @@ public class Model {
     public void updateGameState() {
         player.applyGravity();
         
-        // Debug statements
-        // System.out.println("Player Y Position: " + player.getY());
-        // System.out.println("Player VelocityY: " + player.getVelocityY());
-
         // Update platforms
         for (Platform platform : platforms) {
             platform.update();
@@ -151,12 +147,9 @@ public class Model {
                 iterator.remove();
                 view.removePlatform(platform);
                 score.increaseScore(1);
-    
-                // **No need to add a new platform here**
             }
         }
     }
-    
     
 
     private boolean playerIntersectsPlatform(Platform platform) {

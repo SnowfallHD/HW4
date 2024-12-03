@@ -52,9 +52,6 @@ public class Model {
         }
     }
     
-    
-    
-    
     private void addFirstPlatform(double x, double y) {
         Platform platform = createRegularPlatform(x, y);
         platforms.add(platform);
@@ -75,8 +72,6 @@ public class Model {
         view.addPlatform(platform);
     }
     
-    
-
     public void updateGameState() {
         player.applyGravity();
         
@@ -148,7 +143,6 @@ public class Model {
         }
     }
     
-
     private boolean playerIntersectsPlatform(Platform platform) {
         double playerBottomY = player.getY() + player.getHeight();
         double platformTopY = platform.getY();
@@ -162,7 +156,6 @@ public class Model {
         return isHorizontallyAligned && isVerticallyAligned && isFalling;
     }
     
-
     private Platform getTopMostPlatform() {
         Platform topPlatform = null;
         double minY = Double.MAX_VALUE;
@@ -174,7 +167,6 @@ public class Model {
         }
         return topPlatform;
     }
-    
 
     private void ensurePlatformsAbove() {       // method to help with smooth scroll illusion 
         Platform topPlatform = getTopMostPlatform();

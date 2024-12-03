@@ -27,5 +27,5 @@ Key presses were not being captured because there was no focus.
 Overriding the getScene() method caused issue, we renamed the method in the View class to getGameScene() to avoid overriding.
 
 ## Highest Score
-Cooper: 101
+Cooper: 111
 Danny: 123
